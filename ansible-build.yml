@@ -1,0 +1,32 @@
+---
+  - name: Install docker build and run container
+    hosts: Server
+    become: yes
+
+
+    tasks:
+    - name: Ensure docker is installed
+      apt:
+        name: docker.io
+        state: latest
+
+    - name: Ensure git is installed
+      apt:
+        name: git
+        state: latest
+
+    - name: clone the dockerfile repo
+      command: git clone https://github.com/Binodsubedi/HAZESOFT-T1.git
+      ignore_errors: yes
+
+    - name: Ensure docker-compose is installed
+      apt:
+        name: docker-compose
+        state: latest
+
+    - name: build the image and run
+      command: docker-compose up -d
+      args:
+        chdir: /home/kali/HAZESOFT-T1
+
+
